@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const $arenas = document.querySelector('.arenas');
     const $randomBtn = document.querySelector('.button');
+    // const $reloadButton = document.querySelector('.reloadWrap .button');
     const player1 =  {
             player: 1,
             name: 'Scorpion',
@@ -11,7 +12,11 @@ document.addEventListener("DOMContentLoaded", function() {
             attack: function() {
                 console.log(player1.name + ' Fight...')
             },
-        };
+            changeHP: changeHP,
+            elHP: elHP,
+            renderHP: renderHP,
+
+    };
     const player2 =  {
             player: 2,
             name: 'KItana',
@@ -21,7 +26,14 @@ document.addEventListener("DOMContentLoaded", function() {
             attack: function() {
                 console.log(player2.name + ' Fight...')
             },
+            changeHP: changeHP,
+            elHP: elHP,
+            renderHP: renderHP,
     };
+
+    function getRandom(max) {
+        return Math.ceil(Math.random() * max);
+      }
 
     
 
@@ -65,33 +77,74 @@ document.addEventListener("DOMContentLoaded", function() {
     $arenas.appendChild(createPlayer(player1));
     $arenas.appendChild(createPlayer(player2));
 
-    function playerWins(name) {
-        const $winsTitle = createElement('div', 'loseTitle');
-        $winsTitle.innerText = name + ' wins';
-
-        return $winsTitle;
+    function $result(name) {
+        const $resultTitle = createElement('div', 'loseTitle');
+        if (name) {
+            $resultTitle.innerText = name.name + ' wins';
+        } else {
+            $resultTitle.innerText = 'draw';
+        }
+        return $resultTitle;
     }
  
-    function changeHp (player) {
-        const $playerLife = document.querySelector('.player'+ player.player + ' .life');
-        player.hp -= Math.ceil(Math.random() * 20);
-        $playerLife.style.width = player.hp + '%';
+    
+    $randomBtn.addEventListener('click', function() {
+        // changeHp(player1);
+        // changeHp(player2);
+        player1.changeHP(getRandom(20));
+        player2.changeHP(getRandom(20));
+        player1.renderHP();
+        player2.renderHP();
 
-        if (player.hp <= 0) {
-            $playerLife.style.width = '0';
+        if(player1.hp == 0 || player2.hp == 0) {
             $randomBtn.setAttribute("disabled", "1");
-            $arenas.appendChild(playerWins(player1.hp > 0? player1.name : player2.name));
+            createReloadButton();
         }
-
         
+        if(player1.hp == 0 && player2.hp > player1.hp) {
+            $arenas.appendChild($result(player2));
+        } else 
+        if(player2.hp == 0 && player1.hp > player2.hp) {
+            $arenas.appendChild($result(player1));
+        } else
+        if(player2.hp == 0 && player2.hp == 0) {
+            $arenas.appendChild($result());
         }
-        $randomBtn.addEventListener('click', function() {
-            changeHp(player1);
-            changeHp(player2);
-            
-        });
-    
+    });
     
 
-   
+    function changeHP(hp) {
+        if(this.hp > hp) {
+            this.hp -= hp;
+            console.log(this.hp); 
+        } else {
+            this.hp = '0';
+            console.log('lose');
+        }
+    }
+
+    function elHP() {
+        const $player = document.querySelector('.player'+this.player);
+        console.log($player);
+        return $player; 
+    }
+
+    function renderHP() {
+        const $playerLife = document.querySelector('.player'+ this.player + ' .life');
+        $playerLife.style.width = this.hp + '%';
+        console.log(this.hp + '%');
+    }
+
+    function createReloadButton() {
+        const $reloadWrap = createElement('div', 'reloadWrap');
+        const $reloadButton = createElement('button', 'button');
+        $reloadButton.innerText = 'Restart';
+        $reloadWrap.appendChild($reloadButton);
+        $arenas.appendChild($reloadWrap);
+        $reloadButton.addEventListener('click', () => {
+            window.location.reload();
+            $arenas.removeChild($reloadWrap);
+        });
+    }
+
 });

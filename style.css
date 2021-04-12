@@ -262,6 +262,15 @@ body {
     top: 1px;
 }
 
+.button:disabled {
+    top: 0;
+    opacity: 0.5;
+}
+.button:disabled::after {
+    top: 0;
+    border: none;
+}
+
 .loseTitle {
     position: absolute;
     top: 25%;
@@ -274,3 +283,14 @@ body {
     font-family: "Mortal Kombat 3";
 }
 
+.reloadWrap {
+    position: absolute;
+    top: 10%;
+    z-index: 1000;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+.reloadWrap .button {
+    margin-top: 0;
+}
