@@ -86,8 +86,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         return $resultTitle;
     }
- 
-    
+
     $randomBtn.addEventListener('click', function() {
         // changeHp(player1);
         // changeHp(player2);
@@ -124,14 +123,13 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function elHP() {
-        const $player = document.querySelector('.player'+this.player);
+        const $player = document.querySelector('.player'+ this.player + ' .life');
         console.log($player);
         return $player; 
     }
 
     function renderHP() {
-        const $playerLife = document.querySelector('.player'+ this.player + ' .life');
-        $playerLife.style.width = this.hp + '%';
+        this.elHP().style.width = this.hp + '%';
         console.log(this.hp + '%');
     }
 
