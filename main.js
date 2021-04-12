@@ -98,6 +98,12 @@ document.addEventListener("DOMContentLoaded", function() {
         if(player1.hp == 0 || player2.hp == 0) {
             $randomBtn.setAttribute("disabled", "1");
             createReloadButton();
+            document.addEventListener('keydown', function(evt) {
+                console.log(evt.code);
+                 if(evt.code == 'Space') {
+                    window.location.reload();
+                 }
+            })
         }
         
         if(player1.hp == 0 && player2.hp > player1.hp) {
@@ -143,6 +149,7 @@ document.addEventListener("DOMContentLoaded", function() {
             window.location.reload();
             $arenas.removeChild($reloadWrap);
         });
+        
     }
 
 });
