@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const player1 =  {
             player: 1,
             name: 'Scorpion',
-            hp: '100',
+            hp: 100,
             img: 'scorpion.gif',
             weapon: ['ak-47', 15],
             attack: function() {
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const player2 =  {
             player: 2,
             name: 'KItana',
-            hp: '100',
+            hp: 100,
             img: 'kitana.gif',
             weapon: ['katana', 0],
             attack: function() {
@@ -96,14 +96,8 @@ document.addEventListener("DOMContentLoaded", function() {
         player2.renderHP();
 
         if(player1.hp == 0 || player2.hp == 0) {
-            $randomBtn.setAttribute("disabled", "1");
             createReloadButton();
-            document.addEventListener('keydown', function(evt) {
-                console.log(evt.code);
-                 if(evt.code == 'Space') {
-                    window.location.reload();
-                 }
-            })
+            $randomBtn.setAttribute("disabled", "1");
         }
         
         if(player1.hp == 0 && player2.hp > player1.hp) {
@@ -123,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function() {
             this.hp -= hp;
             console.log(this.hp); 
         } else {
-            this.hp = '0';
+            this.hp = 0;
             console.log('lose');
         }
     }
@@ -151,5 +145,13 @@ document.addEventListener("DOMContentLoaded", function() {
         });
         
     }
+
+   
+        document.addEventListener('keydown', function(evt) {
+            if( (player1.hp == 0 || player2.hp == 0) && evt.code === 'Space') {
+                window.location.reload();
+            }
+            console.log(evt.code);
+        });
 
 });
