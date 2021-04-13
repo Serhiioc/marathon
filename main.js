@@ -1,12 +1,11 @@
 document.addEventListener("DOMContentLoaded", function() {
-
     const $arenas = document.querySelector('.arenas');
     const $randomBtn = document.querySelector('.button');
     // const $reloadButton = document.querySelector('.reloadWrap .button');
     const player1 =  {
             player: 1,
             name: 'Scorpion',
-            hp: 100,
+            hp: '100',
             img: 'scorpion.gif',
             weapon: ['ak-47', 15],
             attack: function() {
@@ -57,7 +56,6 @@ document.addEventListener("DOMContentLoaded", function() {
         // * Name
         const $name = createElement('div', 'name');
         $name.innerText = playerObj.name;
-
         $progressbar.appendChild($life);
         $progressbar.appendChild($name);
         // ! CHaracter
@@ -66,14 +64,17 @@ document.addEventListener("DOMContentLoaded", function() {
         const $img = createElement('img');
         $img.src = 'http://reactmarathon-api.herokuapp.com/assets/' + playerObj.img;
 
+
         $character.appendChild($img);
 
         $players.appendChild($progressbar);
         $players.appendChild($character);
 
+
        return $players;
 
     };
+       
     $arenas.appendChild(createPlayer(player1));
     $arenas.appendChild(createPlayer(player2));
 
@@ -153,5 +154,6 @@ document.addEventListener("DOMContentLoaded", function() {
             }
             console.log(evt.code);
         });
+
 
 });
