@@ -8,12 +8,10 @@ document.addEventListener("DOMContentLoaded", function() {
             hp: '100',
             img: 'scorpion.gif',
             weapon: ['ak-47', 15],
-            attack: function() {
-                console.log(player1.name + ' Fight...')
-            },
-            changeHP: changeHP,
-            elHP: elHP,
-            renderHP: renderHP,
+            attack,
+            changeHP,
+            elHP,
+            renderHP,
 
     };
     const player2 =  {
@@ -22,19 +20,15 @@ document.addEventListener("DOMContentLoaded", function() {
             hp: 100,
             img: 'kitana.gif',
             weapon: ['katana', 0],
-            attack: function() {
-                console.log(player2.name + ' Fight...')
-            },
-            changeHP: changeHP,
-            elHP: elHP,
-            renderHP: renderHP,
+            attack, 
+            changeHP,
+            elHP,
+            renderHP,
     };
 
     function getRandom(max) {
         return Math.ceil(Math.random() * max);
-      }
-
-    
+    }
 
     function createElement (tag, className) {
         const $tag = document.createElement(tag);
@@ -63,17 +57,12 @@ document.addEventListener("DOMContentLoaded", function() {
         // * Image
         const $img = createElement('img');
         $img.src = 'http://reactmarathon-api.herokuapp.com/assets/' + playerObj.img;
-
-
         $character.appendChild($img);
-
         $players.appendChild($progressbar);
         $players.appendChild($character);
-
-
        return $players;
 
-    };
+    }
        
     $arenas.appendChild(createPlayer(player1));
     $arenas.appendChild(createPlayer(player2));
@@ -89,8 +78,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     $randomBtn.addEventListener('click', function() {
-        // changeHp(player1);
-        // changeHp(player2);
         player1.changeHP(getRandom(20));
         player2.changeHP(getRandom(20));
         player1.renderHP();
@@ -112,26 +99,25 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
     
+    function attack() {
+        console.log(this.name + ' Fight...')
+    }
 
     function changeHP(hp) {
         if(this.hp > hp) {
             this.hp -= hp;
-            console.log(this.hp); 
         } else {
             this.hp = 0;
-            console.log('lose');
         }
     }
 
     function elHP() {
         const $player = document.querySelector('.player'+ this.player + ' .life');
-        console.log($player);
         return $player; 
     }
 
     function renderHP() {
         this.elHP().style.width = this.hp + '%';
-        console.log(this.hp + '%');
     }
 
     function createReloadButton() {
@@ -152,7 +138,6 @@ document.addEventListener("DOMContentLoaded", function() {
             if( (player1.hp == 0 || player2.hp == 0) && evt.code === 'Space') {
                 window.location.reload();
             }
-            console.log(evt.code);
         });
 
 
