@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     const $arenas = document.querySelector('.arenas');
-    // const $randomBtn = document.querySelector('.button');
+    const $randomBtn = document.querySelector('.button');
     const $formFight = document.querySelector('.control');
     const player1 =  {
             player: 1,
