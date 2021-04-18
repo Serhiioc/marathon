@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
             '[playerLose] погиб от удара бойца [playerWins]',
             'Результат боя: [playerLose] - жертва, [playerWins] - убийца',
         ],
-        hits: [
+        hit: [
             '[playerDefence] пытался сконцентрироваться, но [playerKick] разбежавшись раздробил копчиком левое ухо врага.',
             '[playerDefence] расстроился, как вдруг, неожиданно [playerKick] случайно раздробил грудью грудину противника.',
             '[playerDefence] зажмурился, а в это время [playerKick], прослезившись, раздробил кулаком пах оппонента.',
@@ -147,6 +147,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function createReloadButton() {
+        $randomBtn.setAttribute("disabled", "1");
         const $reloadWrap = createElement('div', 'reloadWrap');
         const $reloadButton = createElement('button', 'button');
         $reloadButton.innerText = 'Restart';
@@ -190,63 +191,69 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function fightStep(playerDefence, playerAttack, gamer, computer) {
-        if(gamer.hit != computer.defence) {
+        if(gamer.hit !== computer.defence) {
             playerDefence.changeHP(gamer.value)
-            viewLogs('hits', playerAttack, playerDefence );
+            viewLogs('hit', playerAttack, playerDefence );
         } else {
             viewLogs('defence', playerAttack, playerDefence );
         };
         playerDefence.renderHP();
     }
 
-    function viewResult() {
-        if(player1.hp == 0 || player2.hp == 0) {
-            createReloadButton();
-            $randomBtn.setAttribute("disabled", "1");
-        }
-        
-        if(player1.hp == 0 && player2.hp > player1.hp) {
+    function viewResult() {=
+        if(player1.hp === 0 && player2.hp > player1.hp) {
             $arenas.appendChild($result(player2));
-            endLogs(player2, player1)
+            viewLogs('end', player2, player1)
         } else 
-        if(player2.hp == 0 && player1.hp > player2.hp) {
+        if(player2.hp === 0 && player1.hp > player2.hp) {
             $arenas.appendChild($result(player1));
-            endLogs(player1, player2)
+            viewLogs('end', player1, player2);
         } else
-        if(player2.hp == 0 && player2.hp == 0) {
+        if(player2.hp === 0 && player2.hp === 0) {
             $arenas.appendChild($result());
-            startAndDRaw('draw');
+            viewLogs('draw');
         }
     }
 
-    function startAndDRaw(type = 'start') {
-        let date = new Date();
-        const time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-        const text = logs[type].replace('[player1]', player1.name).replace('[player2]', player2.name).replace('[time]', time);
-        const elem = `<p>${text}</p>`;
+    let date = new Date();
+    const time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+
+    viewLogs('start', player1, player2);
+
+    function pasteLog(item) {
+        const elem = `<p>${item}</p>`;
         $chat.insertAdjacentHTML('afterbegin', elem);
+        console.log(num, item);
     }
 
-    setTimeout(startAndDRaw, 2000);
-
-    function viewLogs(type, attackPlayer = '', defencePlayer = '') {
+    function viewLogs(type, attackPlayerWins = '', defencePlayerLose = '') {
         let num = getRandom(logs[type].length - 1);
-        const text = logs[type][num].replace('[playerDefence]', defencePlayer.name).replace('[playerKick]', attackPlayer.name);
-        const elem = `<p>${text}</p>`;
-        $chat.insertAdjacentHTML('afterbegin', elem);
-        console.log(num, text);
-    }
-
-    function endLogs(playerWins, playerLose) {
-        let num = getRandom(logs.end.length - 1);
-        const text = logs.end[num].replace('[playerWins]', playerWins.name).replace('[playerLose]', playerLose.name);
-        const elem = `<p>${text}</p>`;
-        $chat.insertAdjacentHTML('afterbegin', elem);
-        console.log(num, text);
-    }
-
-   
-
+        let text; 
+        switch (type) {
+            case 'start':
+                text = logs[type].replace('[player1]', attackPlayerWins.name).replace('[player2]', defencePlayerLose.name).replace('[time]', time);
+                pasteLog(text);
+                break;
+            case 'hit':
+                text = logs[type][num].replace('[playerDefence]', defencePlayerLose.name).replace('[playerKick]', attackPlayerWins.name);
+                pasteLog(text);
+                break;
+            case 'defence':
+                text = logs[type][num].replace('[playerDefence]', defencePlayerLose.name).replace('[playerKick]', attackPlayerWins.name);
+                pasteLog(text);
+                break;
+            case 'end':
+                createReloadButton();
+                text = logs.end[num].replace('[playerWins]', attackPlayerWins.name).replace('[playerLose]', defencePlayerLose.name);
+                pasteLog(text);
+                break;        
+            case 'draw':
+                text = logs[type];
+                pasteLog(text);
+                break;
+        }
+    }=
+    
     $formFight.addEventListener('submit', function (evt) {
         evt.preventDefault();
         const enemy = enemyAttack();
