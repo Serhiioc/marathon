@@ -200,7 +200,7 @@ document.addEventListener("DOMContentLoaded", function() {
         playerDefence.renderHP();
     }
 
-    function viewResult() {=
+    function viewResult() {
         if(player1.hp === 0 && player2.hp > player1.hp) {
             $arenas.appendChild($result(player2));
             viewLogs('end', player2, player1)
@@ -223,7 +223,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function pasteLog(item) {
         const elem = `<p>${item}</p>`;
         $chat.insertAdjacentHTML('afterbegin', elem);
-        console.log(num, item);
+        console.log(item);
     }
 
     function viewLogs(type, attackPlayerWins = '', defencePlayerLose = '') {
@@ -252,8 +252,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 pasteLog(text);
                 break;
         }
-    }=
-    
+    }
+
     $formFight.addEventListener('submit', function (evt) {
         evt.preventDefault();
         const enemy = enemyAttack();
