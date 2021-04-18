@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const $randomBtn = document.querySelector('.button');
     const $formFight = document.querySelector('.control');
     const $chat = document.querySelector('.chat');
+    const date = new Date();
+    const time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
       
     const player1 =  {
             player: 1,
@@ -114,6 +116,7 @@ document.addEventListener("DOMContentLoaded", function() {
        
     $arenas.appendChild(createPlayer(player1));
     $arenas.appendChild(createPlayer(player2));
+    viewLogs('start', player1, player2);
 
     function $result(name) {
         const $resultTitle = createElement('div', 'loseTitle');
@@ -217,11 +220,6 @@ document.addEventListener("DOMContentLoaded", function() {
             viewLogs('draw');
         }
     }
-
-    let date = new Date();
-    const time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-
-    viewLogs('start', player1, player2);
 
     function pasteLog(item) {
         const elem = `<p>${item}</p>`;
