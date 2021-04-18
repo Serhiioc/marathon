@@ -202,14 +202,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function viewResult() {
         if(player1.hp === 0 && player2.hp > player1.hp) {
+            createReloadButton();
             $arenas.appendChild($result(player2));
             viewLogs('end', player2, player1)
         } else 
         if(player2.hp === 0 && player1.hp > player2.hp) {
+            createReloadButton();
             $arenas.appendChild($result(player1));
             viewLogs('end', player1, player2);
         } else
         if(player2.hp === 0 && player2.hp === 0) {
+            createReloadButton();
             $arenas.appendChild($result());
             viewLogs('draw');
         }
