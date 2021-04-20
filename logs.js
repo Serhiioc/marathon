@@ -56,27 +56,24 @@ export function viewLogs(type, attackPlayerWins = '', defencePlayerLose = '') {
     switch (type) {
         case 'start':
             text = logs[type].replace('[player1]', attackPlayerWins.name).replace('[player2]', defencePlayerLose.name).replace('[time]', time);
-            pasteLog(text);
             break;
         case 'hit':
             text = logs[type][num].replace('[playerDefence]', defencePlayerLose.name).replace('[playerKick]', attackPlayerWins.name);
-            pasteLog(text);
             break;
         case 'defence':
             text = logs[type][num].replace('[playerDefence]', defencePlayerLose.name).replace('[playerKick]', attackPlayerWins.name);
-            pasteLog(text);
             break;
         case 'end':
             text = logs.end[num].replace('[playerWins]', attackPlayerWins.name).replace('[playerLose]', defencePlayerLose.name);
-            pasteLog(text);
             break;        
         case 'draw':
             text = logs[type];
-            pasteLog(text);
             break;
         default:
             console.log('error');
+            break;
     }
+    pasteLog(text);
 }
 
 
