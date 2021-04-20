@@ -244,7 +244,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 pasteLog(text);
                 break;
             case 'end':
-                createReloadButton();
                 text = logs.end[num].replace('[playerWins]', attackPlayerWins.name).replace('[playerLose]', defencePlayerLose.name);
                 pasteLog(text);
                 break;        
@@ -252,6 +251,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 text = logs[type];
                 pasteLog(text);
                 break;
+            default:
+                console.log('error');
         }
     }
 
