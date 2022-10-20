@@ -1,13 +1,18 @@
-import getRandom from './random.js';
+import Data from './random.js';
 
-const logs = {
-    start: 'Часы показывали [time], когда [player1] и [player2] бросили вызов друг другу.',
-    end: [
+const {getRandom, currentTime} = new Data();
+
+// const {getRandom, currentTime} = data;
+
+
+class Logs {
+    start = 'Часы показывали [time], когда [player1] и [player2] бросили вызов друг другу.';
+    end =  [
         'Результат удара [playerWins]: [playerLose] - труп',
         '[playerLose] погиб от удара бойца [playerWins]',
         'Результат боя: [playerLose] - жертва, [playerWins] - убийца',
-    ],
-    hit: [
+    ];
+    hit = [
         '[playerDefence] пытался сконцентрироваться, но [playerKick] разбежавшись раздробил копчиком левое ухо врага.',
         '[playerDefence] расстроился, как вдруг, неожиданно [playerKick] случайно раздробил грудью грудину противника.',
         '[playerDefence] зажмурился, а в это время [playerKick], прослезившись, раздробил кулаком пах оппонента.',
@@ -26,8 +31,8 @@ const logs = {
         '[playerDefence] ковырялся в зубах, как вдруг, неожиданно [playerKick] отчаянно размозжил плечом мышцы пресса оппонента.',
         '[playerDefence] пришел в себя, и в это время [playerKick] провел разбивающий удар кистью руки, пробив блок, в голень противника.',
         '[playerDefence] пошатнулся, а в это время [playerKick] хихикая влепил грубый удар открытой ладонью по бедрам врага.',
-    ],
-    defence: [
+    ];
+    defence = [
         '[playerKick] потерял момент и храбрый [playerDefence] отпрыгнул от удара открытой ладонью в ключицу.',
         '[playerKick] не контролировал ситуацию, и потому [playerDefence] поставил блок на удар пяткой в правую грудь.',
         '[playerKick] потерял момент и [playerDefence] поставил блок на удар коленом по селезенке.',
@@ -36,13 +41,12 @@ const logs = {
         '[playerKick] обманулся и жестокий [playerDefence] блокировал удар стопой в солнечное сплетение.',
         '[playerKick] не думал о бое, потому расстроенный [playerDefence] отпрыгнул от удара кулаком куда обычно не бьют.',
         '[playerKick] обманулся и жестокий [playerDefence] блокировал удар стопой в солнечное сплетение.'
-    ],
-    draw: 'Ничья - это тоже победа!'
+    ];
+    draw = 'Ничья - это тоже победа!';
 };
-
+const logs = new Logs();
 const $chat = document.querySelector('.chat');
-const date = new Date();
-const time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+
 
 const pasteLog = (item) => {
     const elem = `<p>${item}</p>`;
@@ -55,12 +59,18 @@ export function viewLogs(type, attackPlayerWins = '', defencePlayerLose = '') {
     let text; 
     switch (type) {
         case 'start':
-            text = logs[type].replace('[player1]', attackPlayerWins.name).replace('[player2]', defencePlayerLose.name).replace('[time]', time);
+            text = logs[type]
+                .replace('[player1]', attackPlayerWins.name)
+                .replace('[player2]', defencePlayerLose.name)
+                .replace('[time]', currentTime());
             break;
         case 'hit':
-            text = logs[type][num].replace('[playerDefence]', defencePlayerLose.name).replace('[playerKick]', attackPlayerWins.name);
+            text = logs[type][num]
+            .replace('[playerDefence]', defencePlayerLose.name)
+            .replace('[playerKick]', attackPlayerWins.name);
             break;
         case 'defence':
+
             text = logs[type][num].replace('[playerDefence]', defencePlayerLose.name).replace('[playerKick]', attackPlayerWins.name);
             break;
         case 'end':
